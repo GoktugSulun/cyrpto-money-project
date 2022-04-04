@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 
 import * as actionCreators from '../store/actions/actionCreators';
-import { getApiRequest } from '../store/actions/thunkActions';
+import { getHomeApiRequest } from '../store/actions/thunkActions';
 
 const userWalletInfo = {
   target: 'user',
@@ -77,12 +77,11 @@ const purchaseHistoryInfo = {
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const state = useSelector(state => state);
-  console.log(state, ' __');
+  // const state = useSelector(state => state);
 
   useEffect(() => {
 
-    dispatch(getApiRequest());
+    dispatch(getHomeApiRequest());
 
   }, [dispatch]);
 

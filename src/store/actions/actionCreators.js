@@ -8,3 +8,4 @@ export const setWallet = (crypto) => ({ type: actionTypes.WALLET_SET, payload: c
 
 export const getWalletApi = (data) => ({ type: actionTypes.GET_WALLET_API, payload: data });
 export const getHistoryApi = (data) => ({ type: actionTypes.GET_HISTORY_API, payload: data });
+export const getMarketApi = (data) => ({ type: actionTypes.GET_MARKET_API, payload: data });

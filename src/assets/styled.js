@@ -26,3 +26,31 @@ export const Main = styled.main`
    gap: 20px;
 `;
 
+export const BuyButton = styled(Button)`
+   background: green;
+   border: none !important;
+   color: #fff;
+
+   :hover {
+      background: green;
+      opacity: .7;
+   }
+
+   :disabled {
+      background: rgba(239, 239, 239, 0.3);
+      color: rgba(16, 16, 16, 0.3);
+      border: 1px solid rgba(118, 118, 118, 0.3) !important;
+   }
+
+`;
+
+export const SoldButton = styled(Button)`
+   background: red;
+      border-color: #fff;
+      color: #fff;
+
+      :hover {
+         background: red;
+         opacity: .7;
+      }
+`;

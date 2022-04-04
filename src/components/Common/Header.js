@@ -14,16 +14,13 @@ import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { InboxOutlined } from '@mui/icons-material';
 
-import useStyles from '../../hooks/useStyles';
 import { MenuButtonEl } from '../../assets/styled';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Markets'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 const ResponsiveAppBar = () => {
-  const classes = useStyles();
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -38,6 +35,7 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    navigate('/markets');
   };
 
   const handleCloseUserMenu = (idx) => {
@@ -56,7 +54,8 @@ const ResponsiveAppBar = () => {
             variant="h4" 
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', color: '#fcd535',  md: 'flex' } }}
+            onClick={() => navigate('/home')}
+            sx={{ mr: 2, display: { xs: 'none', color: '#fcd535',  md: 'flex' }, cursor:'pointer' }}
           >
             LOGO
           </Typography>

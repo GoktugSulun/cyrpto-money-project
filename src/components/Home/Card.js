@@ -4,7 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, ImageListItem, Button, ButtonGroup} from '@mui/material';
 
-import { DivWallet, CardContainer, CardEl, BuyButton, SoldButton } from './styled';
+import { DivWallet, CardContainer, CardEl } from './styled';
+import { BuyButton, SoldButton } from '../../assets/styled';
 
 import { useEffect } from 'react';
 
@@ -13,30 +14,24 @@ import { useSelector } from 'react-redux';
 
 export default function ActionAreaCard(props) {
   const walletReducer = useSelector(state => state.walletReducer);
+  const historyReducer = useSelector(state => state.historyReducer);
 
-  const buyCrypto = () => {
-    console.log(walletReducer, ' ?????');
-    // console.log(balance, ' balance');  
-    // console.log(cryptos, ' cryptos');  
-    // console.log(target, ' target');  
-    // console.log(title, ' title');  
-    // { balance, cryptos, target, title }
+  const cryptoBuyHandler = () => {
+    console.log('buy sth');
   }
 
-  const showCrypto = () => {
-    console.log(walletReducer, 'After state');
+  const cryptoSoldHandler = () => {
+    console.log('sold sth');
   }
 
   const { targetCard } = props;
 
   if(targetCard === 'user'){
-    const { userWallet } = props;
-    return userCard(walletReducer, buyCrypto, showCrypto);
+    return userCard(walletReducer, cryptoBuyHandler, cryptoSoldHandler);
   }
 
   if(targetCard === 'purchase-history'){
-    const { purchaseHistory } = props;
-    return purchaseHistoryCard(purchaseHistory);
+    return purchaseHistoryCard(historyReducer, cryptoBuyHandler, cryptoSoldHandler);
   }
 
   return <div>
@@ -45,8 +40,8 @@ export default function ActionAreaCard(props) {
   
 }
 
-const userCard = (userWallet, buyCrypto, showCrypto) => {
-  const { title, balance, cryptos} = userWallet;
+const userCard = (userWallet, cryptoBuyHandler, cryptoSoldHandler) => {
+  const { title, balance, cryptos } = userWallet;
 
   return (
     <CardEl>
@@ -94,8 +89,8 @@ const userCard = (userWallet, buyCrypto, showCrypto) => {
               </div>
               
               <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <BuyButton onClick={buyCrypto} size='small'> Al </BuyButton>
-                <SoldButton onClick={showCrypto} size='small'> Sat </SoldButton>
+                <BuyButton onClick={cryptoBuyHandler} size='small'> Al </BuyButton>
+                <SoldButton onClick={cryptoSoldHandler} size='small'> Sat </SoldButton>
               </ButtonGroup>
             </CardContainer>)
           })
@@ -106,7 +101,7 @@ const userCard = (userWallet, buyCrypto, showCrypto) => {
   );
 }
 
-const purchaseHistoryCard = (purchaseHistory) => {
+const purchaseHistoryCard = (purchaseHistory, cryptoBuyHandler, cryptoSoldHandler) => {
   const { title, cryptos } = purchaseHistory;
 
   return (

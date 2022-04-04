@@ -8,6 +8,8 @@ const PrivateRoute = (props) => {
    switch (target) {
       case 'home':
          return isToken ? <Component /> : <Navigate to='/login' />;
+      case 'market':
+         return isToken ? <Component /> : <Navigate to='/login' />;
       case 'login':
          return !isToken ? <Component /> : <Navigate to='/home' />;
       case 'register':

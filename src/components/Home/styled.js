@@ -24,23 +24,3 @@ export const CardContainer = styled.div`
       margin-left: 15px;
    }
 `;
-
-export const BuyButton = styled(Button)`
-   background: green;
-      border: none !important;
-
-      :hover {
-         background: green;
-         opacity: .7;
-      }
-`;
-
-export const SoldButton = styled(Button)`
-   background: red;
-      border-color: #fff;
-
-      :hover {
-         background: red;
-         opacity: .7;
-      }
-`;
