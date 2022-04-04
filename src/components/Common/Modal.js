@@ -32,14 +32,14 @@ export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e) => {
     setOpen(true);
-    console.log(e.target.parentElement.parentElement.parentElement);
   };
   const handleClose = () => setOpen(false);
 
   const cryptos = useSelector(state => state.marketReducer);
-  console.log(cryptos, ' CRYP');
+  const wallet = useSelector(state => state.walletReducer);
+  const { balance } = wallet;
 
-  const { type } = props;
+  const { type, clickInfo } = props;
 
   return (
     <div>
@@ -64,7 +64,7 @@ export default function BasicModal(props) {
               <div>
                 <Typography style={{ fontStyle: 'italic' }} variant="body2" color="#b8b7b4"> Your Balance: </Typography>
                 <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                  $200
+                  ${balance}
                 </Typography>
               </div>
               <AccountBalanceWallet fontSize='large' />
@@ -74,16 +74,16 @@ export default function BasicModal(props) {
           <div style={center}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 15,  }} >
               <Icon icon="cryptocurrency:yfi" width="48" height="48" />
-              <Typography variant="h4"> YFI </Typography>
+              <Typography variant="h4"> {clickInfo?.row?.col1 || ''} </Typography>
             </div>
-            <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Current value: 46758$ </Typography>
+            <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Current value: {clickInfo?.row?.col2 || ''} </Typography>
           </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            How much do you want to buy YFI ?
+            How much do you want to buy {clickInfo?.row?.col1 || ''} ?
           </Typography>
 
           <div style={{ marginTop: 15 }}>
-            <Input />
+            <Input wallet={wallet} clickInfo={clickInfo || {}} />
           </div>
           
         </Box>

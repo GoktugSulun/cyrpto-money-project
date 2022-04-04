@@ -100,7 +100,8 @@ const ResponsiveAppBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            sx={{ flexGrow: 1, cursor: 'pointer', display: { xs: 'flex', md: 'none' } }}
+            onClick={() => navigate('/home')}
           >
             LOGO
           </Typography>

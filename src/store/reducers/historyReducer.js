@@ -14,8 +14,8 @@ const historyReducer = produce((draft, action) => {
        case actionTypes.GET_HISTORY_API:
          draft = action.payload;
          return draft;
-       case actionTypes.CRYPTO_ADD:
-         draft.cryptos.push(action.payload);
+       case actionTypes.CRYPTO_ADD_TO_HISTORY:
+         draft.cryptos.unshift(action.payload);
          return draft;
        default:
            return draft;

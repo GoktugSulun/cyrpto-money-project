@@ -7,8 +7,7 @@ const initialState = {
    title: '',
    target: '',
    balance: 0,
-   cryptos: [
-   ]
+   cryptos: [],
 }
 
 const walletReducer = produce((draft, action) => {
@@ -17,15 +16,29 @@ const walletReducer = produce((draft, action) => {
             draft = action.payload;
             return draft;
 
-       case actionTypes.CRYPTO_ADD:
-            draft.crytps.push(action.payload);
+       case actionTypes.CRYPTO_ADD_TO_WALLET:
+            alert('crypto-addd');
+            console.log(action.payload, ' action pay');
+            const idx = draft?.cryptos?.findIndex(crypto => action.payload.type === crypto?.type) || -10;
+            if(idx === -10){
+               alert('null');
+            }
+            if(idx === -1){
+               draft.cryptos.push(action.payload);
+            }else {
+               draft.cryptos[idx].amount += action.payload.amount;
+            }
             return draft;
 
-       case actionTypes.CRYPTO_REMOVE:
+       case actionTypes.CRYPTO_REMOVE_FROM_WALLET:
             return draft;
 
        case actionTypes.GET_WALLET_API:
             draft = action.payload;
+            return draft;
+
+       case actionTypes.BALANCE_DECREASE:
+            draft.balance = draft.balance - action.payload;
             return draft;
 
        default:

@@ -11,8 +11,15 @@ import { useSelector } from 'react-redux';
 export default function ToolbarGrid() {
   const marketDatas = useSelector(state => state.marketReducer);
 
+  const [finalClickInfo, setFinalClickInfo] = React.useState(null)
+
   const rows = createRows(marketDatas);
-  const columns = createColumns(marketDatas);
+  const columns = createColumns(marketDatas, finalClickInfo);
+;
+
+  const handleOnCellClick = (params) => {
+    setFinalClickInfo(params);
+  };
 
   return (
     <ContainerEl maxWidth='lg'>
@@ -21,6 +28,7 @@ export default function ToolbarGrid() {
           rows={rows}
           columns={columns}
           autoHeight={true}
+          onCellClick={handleOnCellClick}
           components={{
             Toolbar: GridToolbar,
           }}
@@ -56,7 +64,7 @@ const createRows = (marketDatas) => {
 }
 
 // createRows function
-const createColumns = (marketDatas) => {
+const createColumns = (marketDatas, finalClickInfo) => {
   const columns = [];
 
   for(let i=0; i<nameOfColumns.length; i++){
@@ -68,6 +76,7 @@ const createColumns = (marketDatas) => {
       renderCell: (cellValues) => {
         return (
           <Modal 
+            clickInfo={finalClickInfo}
             type='buy'
           />
         );
@@ -81,6 +90,7 @@ const createColumns = (marketDatas) => {
       renderCell: (cellValues) => {
         return (     
           <Modal 
+            clickInfo={finalClickInfo}
             type='sold'
           />
         );
