@@ -44,7 +44,7 @@ export const BuyButton = styled(Button)`
 
 `;
 
-export const SoldButton = styled(Button)`
+export const SellButton = styled(Button)`
    background: red;
       border-color: #fff;
       color: #fff;

@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 
-import { BuyButton, SoldButton } from '../../assets/styled';
+import { BuyButton, SellButton } from '../../assets/styled';
 import { setBalance } from '../../store/actions/thunkActions';
 
 import produce from 'immer'
@@ -221,7 +221,7 @@ const CustomizedInputs = (props) => {
             }
    
             {
-               (type === 'sold') && (enteredValue.length > 0 ) && <SoldButton disabled={!isValidAmount} sx={{ width: '60&', }} onClick={buyCryptoMoney} > SELL </SoldButton>
+               (type === 'sell') && (enteredValue.length > 0 ) && <SellButton disabled={!isValidAmount} sx={{ width: '60&', }} onClick={buyCryptoMoney} > SELL </SellButton>
             }
    
          </Box>

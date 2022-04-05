@@ -86,12 +86,12 @@ const createColumns = (marketDatas, finalClickInfo) => {
 
   columns.push(
     { 
-      field: 'Sold', 
+      field: 'Sell', 
       renderCell: (cellValues) => {
         return (     
           <Modal 
             clickInfo={finalClickInfo}
-            type='sold'
+            type='sell'
           />
         );
       }

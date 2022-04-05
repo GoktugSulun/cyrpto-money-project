@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Modal from '@mui/material/Modal';
 
-import { BuyButton, SoldButton } from '../../assets/styled';
+import { BuyButton, SellButton } from '../../assets/styled';
 import { useSelector } from 'react-redux';
 
 import { Icon } from '@iconify/react';
@@ -73,7 +73,7 @@ const BasicModal = (props) => {
       {
          (type === 'buy') 
             ? <BuyButton onClick={handleOpen}> {type} </BuyButton>
-            : <SoldButton onClick={handleOpen}> {type} </SoldButton>
+            : <SellButton onClick={handleOpen}> {type} </SellButton>
       }  
           
       <Modal
