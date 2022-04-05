@@ -86,15 +86,31 @@ export const sellCrypto = (crypto) => async (dispatch, getState) => {
 
 }
 
-// export const setBalance = (newWallet) => async (dispatch) => {
-//    console.log(newWallet, ' => setBalance thunk actions (value)');
+export const addMoneyToWallet = (value) => async (dispatch, getState) => {
+   dispatch(actionCreators.increaseBalance(value));
 
-//    const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+   const state = getState();
+
+   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+      method: 'PUT',
+      body: JSON.stringify(state.walletReducer)
+   });
+   const data = await response.json();
+   dispatch(actionCreators.getWalletApi(data));
+
+}
+
+// export const clearCryptoHistory = () => async (dispatch, getState) => {
+//    dispatch(actionCreators.clearCryptoHistory());
+
+//    const state = getState();
+
+//    const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`, {
 //       method: 'PUT',
-//       body: JSON.stringify(newWallet)
+//       body: JSON.stringify(state.historyReducer)
 //    });
 //    const data = await response.json();
-//    console.log(data, ' setBalance data after await ___');
-
-//    // dispatch(actionCreators.decreaseBalance(value));
+//    dispatch(actionCreators.getHistoryApi(data));
 // }
+
+

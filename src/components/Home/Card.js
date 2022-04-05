@@ -2,7 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import { CardActionArea, ImageListItem, Button, ButtonGroup} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Icon } from '@iconify/react';
 
 import { DivWallet, CardContainer, CardEl } from './styled';
@@ -11,31 +13,26 @@ import HistoryDetail from './HistoryDetail'
 
 import { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import * as thunkActions from '../../store/actions/thunkActions'
 
 
 export default function ActionAreaCard(props) {
   const walletReducer = useSelector(state => state.walletReducer);
   const historyReducer = useSelector(state => state.historyReducer);
   const navigate = useNavigate();
-
-  const cryptoBuyHandler = () => {
-    console.log('buy sth');
-  }
-
-  const cryptoSoldHandler = () => {
-    console.log('sold sth');
-  }
+  const dispatch = useDispatch();
 
   const { targetCard } = props;
 
   if(targetCard === 'user'){
-    return userCard(walletReducer, cryptoBuyHandler, cryptoSoldHandler, navigate);
+    return userCard(walletReducer, navigate);
   }
 
   if(targetCard === 'purchase-history'){
-    return purchaseHistoryCard(historyReducer, cryptoBuyHandler, cryptoSoldHandler, navigate);
+    return purchaseHistoryCard(historyReducer, navigate, dispatch);
   }
 
   return <div>
@@ -44,7 +41,7 @@ export default function ActionAreaCard(props) {
   
 }
 
-const userCard = (userWallet, cryptoBuyHandler, cryptoSoldHandler, navigate) => {
+const userCard = (userWallet, navigate) => {
   const { title, balance, cryptos } = userWallet;
 
   return (
@@ -53,7 +50,8 @@ const userCard = (userWallet, cryptoBuyHandler, cryptoSoldHandler, navigate) => 
         <Typography gutterBottom variant="h3" component="div" align='center'>
           { title }
         </Typography>
-        <Typography variant="h5" color="text.secondary" >
+        <Divider />
+        <Typography sx={{ mt: 4}} variant="h5" color="text.secondary" >
           Balance: { balance }$
         </Typography>
         
@@ -80,24 +78,13 @@ const userCard = (userWallet, cryptoBuyHandler, cryptoSoldHandler, navigate) => 
                       {crypto?.amount}
                     </Typography>
                   </DivWallet>
-                </div>
-              
-                {/* <ImageListItem key={crypto.id + '-img'}>
-                  <img
-                    src={crypto.img}
-                    width='48'
-                    height='48'
-                    alt='dsadas'
-                    loading="lazy"
-                  />
-                </ImageListItem> */}
-                
+                </div>       
               </div>
               
-              <ButtonGroup variant="contained" aria-label="outlined primary button group">
+              {/* <ButtonGroup variant="contained" aria-label="outlined primary button group">
                 <BuyButton onClick={cryptoBuyHandler} size='small'> Buy </BuyButton>
                 <SoldButton onClick={cryptoSoldHandler} size='small'> Sell </SoldButton>
-              </ButtonGroup>
+              </ButtonGroup> */}
             </CardContainer>)
           })
         }
@@ -111,16 +98,25 @@ const userCard = (userWallet, cryptoBuyHandler, cryptoSoldHandler, navigate) => 
   );
 }
 
-const purchaseHistoryCard = (purchaseHistory, cryptoBuyHandler, cryptoSoldHandler, navigate) => {
+const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
   const { title, cryptos } = purchaseHistory;
   console.log(cryptos, ' cryptos');
+
+  // const clearHistoryHandler = () => {
+  //   dispatch(thunkActions.clearCryptoHistory());
+  // }
 
   return (
     <CardEl>
       <CardContent>
+        
+       {/* <ClearHistoryEl onClick={clearHistoryHandler} >
+        <abbr title='Clear History'><DeleteIcon fontSize='medium' /></abbr>
+       </ClearHistoryEl> */}
         <Typography gutterBottom variant="h3" component="div" align='center'>
           { purchaseHistory?.title }
         </Typography>
+        <Divider style={{ marginBottom: 40 }} />
 
         {
           cryptos && 
@@ -147,18 +143,7 @@ const purchaseHistoryCard = (purchaseHistory, cryptoBuyHandler, cryptoSoldHandle
                       </Typography>
                     </DivWallet>
                     <HistoryDetail crypto={crypto} />
-                  </div>
-              
-                  {/* <ImageListItem key={crypto.id + '-img'}>
-                    <img
-                      src={crypto.img}
-                      width='48'
-                      height='48'
-                      alt='dsadas'
-                      loading="lazy"
-                    />
-                  </ImageListItem> */}
-                
+                  </div>                
                 </div>
 
                 <DivWallet>
@@ -175,6 +160,10 @@ const purchaseHistoryCard = (purchaseHistory, cryptoBuyHandler, cryptoSoldHandle
             </CardContainer>
             )
           })
+        }
+
+        {
+          cryptos?.length === 0 && <div style={{ fontStyle:'italic', color: 'red' }}> There is no history! </div>
         }
 
         

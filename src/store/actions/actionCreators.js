@@ -18,5 +18,5 @@ export const increaseBalance = (value) => ({ type: actionTypes.BALANCE_INCREASE,
 
 // history
 export const addCryptoToHistory = (crypto) => ({ type: actionTypes.CRYPTO_ADD_TO_HISTORY, payload: crypto });
-
+// export const clearCryptoHistory = () => ({ type: actionTypes.CLEAR_HISTORY });
 

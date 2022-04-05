@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { Icon } from '@iconify/react';
 import { AccountBalanceWallet } from '@mui/icons-material';
 import Input from '../Common/Input'
+import AddingMoney from './AddingMoney'
+import { Hidden } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -18,7 +20,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 600,
-  height: 400,
+  height: 'auto',
   bgcolor: 'background.paper',
   borderRadius: 5,
   boxShadow: 24,
@@ -28,19 +30,44 @@ const style = {
 
 const center = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 15 };
 
-export default function BasicModal(props) {
+const addingMoneySection = {
+  marginTop: 30,
+  transition: 'all 300ms',
+}
+
+const hideAddingMoneySection = {
+  height: 0,
+  opacity: 0,
+  visibility: 'hidden',
+}
+
+const displayAddingMoneySection = {
+  height: 112,
+  opacity: 1,
+  visibility: 'visible',
+}
+
+const BasicModal = (props) => {
+  const [isDisplayedAddingMoney, setIsDisplayedAddingMoney] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = (e) => {
     setOpen(true);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setIsDisplayedAddingMoney(false);
+  };
 
   const cryptos = useSelector(state => state.marketReducer);
   const wallet = useSelector(state => state.walletReducer);
   const { balance } = wallet;
 
   const { type, clickInfo } = props;
-  
+  const userCrypto = wallet?.cryptos.filter(crypto => crypto?.type === clickInfo?.row?.col0);
+  const infoSectionClass = userCrypto.length > 0 ? { display: 'flex', flexDirection: 'column'} : { display: 'none'};
+
+  let addingMoneyClass = isDisplayedAddingMoney ? displayAddingMoneySection : hideAddingMoneySection;
+      
   return (
     <div>
       {
@@ -64,7 +91,7 @@ export default function BasicModal(props) {
               <div>
                 <Typography style={{ fontStyle: 'italic' }} variant="body2" color="#b8b7b4"> Your Balance: </Typography>
                 <Typography variant="h5" style={{ fontWeight: 'bold' }}>
-                  ${balance}
+                  ${balance} 
                 </Typography>
               </div>
               <AccountBalanceWallet fontSize='large' />
@@ -74,9 +101,14 @@ export default function BasicModal(props) {
           <div style={center}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 15,  }} >
               <Icon icon="cryptocurrency:yfi" width="48" height="48" />
-              <Typography variant="h4"> {clickInfo?.row?.col1 || ''} </Typography>
+              <Typography variant="h4"> {clickInfo?.row?.col1 || ''} 
+                <Typography sx={{marginLeft: 1}} component='span' variant="h6">({clickInfo?.row?.col2 || ''})</Typography>
+              </Typography>
             </div>
-            <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Current value: {clickInfo?.row?.col2 || ''} </Typography>
+            <div style={infoSectionClass}>
+              <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > You have {userCrypto[0]?.amount} {userCrypto[0]?.type} </Typography> 
+              <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Its cost is ${Math.floor(userCrypto[0]?.price * userCrypto[0]?.amount)} </Typography>
+            </div>
           </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             { (type === 'buy') 
@@ -86,7 +118,12 @@ export default function BasicModal(props) {
           </Typography>
 
           <div style={{ marginTop: 15 }}>
-           <Input type={type} wallet={wallet} clickInfo={clickInfo || {}} /> 
+           <Input handleClose={handleClose} setIsDisplayedAddingMoney={setIsDisplayedAddingMoney} type={type} wallet={wallet} clickInfo={clickInfo || {}} /> 
+          </div>
+
+          <div style={{...addingMoneySection, ...addingMoneyClass}}>
+            <Divider />
+            <AddingMoney handleClose={handleClose} setIsDisplayedAddingMoney={setIsDisplayedAddingMoney} />
           </div>
           
         </Box>
@@ -94,3 +131,5 @@ export default function BasicModal(props) {
     </div>
   );
 }
+
+export default BasicModal;

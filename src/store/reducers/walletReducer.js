@@ -1,6 +1,6 @@
 import React from 'react';
 
-import produce from 'immer';
+import produce, {current} from 'immer';
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
@@ -18,11 +18,13 @@ const walletReducer = produce((draft, action) => {
 
        case actionTypes.CRYPTO_ADD_TO_WALLET:
             // alert('crypto-addd');
-            console.log(action.payload, ' action pay');
-            const idx = draft?.cryptos?.findIndex(crypto => action.payload.type === crypto?.type) || -10;
-            if(idx === -10){
-               alert('null');
-            }
+            console.log(current(draft?.cryptos), ' action pay');
+            const idx = draft?.cryptos?.findIndex(crypto => {
+               console.log(current(crypto), ' ?????');
+               console.log(action?.payload?.type === crypto?.type, ' !');
+               return action?.payload?.type === crypto?.type 
+            });
+
             if(idx === -1){
                draft.cryptos.push(action.payload);
             }else {
@@ -32,11 +34,7 @@ const walletReducer = produce((draft, action) => {
 
        case actionTypes.CRYPTO_REMOVE_FROM_WALLET:
             console.log('remove reducer !!');
-            const index = draft?.cryptos?.findIndex(crypto => action.payload.type === crypto?.type) || -10;
-
-            if(index === -10){
-               alert('null');
-            }
+            const index = draft?.cryptos?.findIndex(crypto => action.payload.type === crypto?.type);
 
             if(index !== -1){
                const result = draft.cryptos[index].amount - action.payload.amount;
@@ -61,6 +59,7 @@ const walletReducer = produce((draft, action) => {
             return draft;
 
        case actionTypes.BALANCE_INCREASE:
+            console.log(' SECONDDD WORORKRRKK ');
             draft.balance = draft.balance + action.payload;
             return draft;
       

@@ -45,6 +45,7 @@ const absolute = {
 }
 
 let sellWarningMessage = null;
+let buyWarningMessage = {};
 
 const CustomizedInputs = (props) => { 
    const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const CustomizedInputs = (props) => {
    const [isValidAmount, setIsValidAmount] = React.useState(true);
    const [isTypedAmount, setIsTypedAmount] = React.useState(false);
 
-   const { clickInfo, wallet, type } = props;
+   const { clickInfo, wallet, type, setIsDisplayedAddingMoney, handleClose } = props;
 
    const isUserHaveCrypto = wallet.cryptos.findIndex(cyrpto => cyrpto.type === clickInfo?.row?.col0) !== -1;
    
@@ -62,10 +63,16 @@ const CustomizedInputs = (props) => {
 
    const inputColor = (isValidAmount) ? 'primary' : 'error';
 
-   const enteredValueHandler = (e) => {    
-      if(Number(e.target.value) < 0){
+   const enteredValueHandler = (e) => {  
+      setIsDisplayedAddingMoney(false);  
+
+      if(Number(e.target.value) <= 0){
          setIsValidAmount(false);
          sellWarningMessage = 'Invalid value! Please enter a positive value.';
+         buyWarningMessage = {
+            message: 'Invalid value! Please enter a positive value.',
+            isValid: false
+         };
          return;
       }
 
@@ -83,8 +90,13 @@ const CustomizedInputs = (props) => {
       // const isValidAmount = Number(e.target.value) <= wallet.balance;
       if(isValidAmount){
          setIsValidAmount(true);
+         sellWarningMessage = '';
       }else {
          sellWarningMessage = 'You cannot sell crypto more than you have!';
+         buyWarningMessage = {
+            message: 'You cannot buy crypto more than balance you have. Do you want to add money ?',
+            isValid: true
+         }
          setIsValidAmount(false);
       }
 
@@ -105,7 +117,8 @@ const CustomizedInputs = (props) => {
       let newCryptoForWallet = {
          amount: Number(calculatedValue),
          price: Number(priceValue),
-         type: clickInfo.row.col0
+         type: clickInfo.row.col0,
+         cost: Number(enteredValue)
       };
 
       let newCryptoForHistory = {
@@ -137,6 +150,8 @@ const CustomizedInputs = (props) => {
       // reset
       setEnteredValue('');
       setCalculatedValue(0);
+
+      handleClose();
    }
 
    if(!isUserHaveCrypto && !isTypeBuy){
@@ -186,10 +201,17 @@ const CustomizedInputs = (props) => {
                   <Typography variant='body2' sx={{ color: 'red', fontStyle: 'italic' }} > 
                      { 
                         (type === 'buy')
-                           ? `You cannot buy crypto more than balance you have. Do you want to add money ?`
+                           ? buyWarningMessage.message
                            : sellWarningMessage
                      }
-                     <Typography variant='body2' component="span" sx={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} > {(type === 'buy') && 'Add Money'} </Typography> 
+                     <Typography onClick={() => {
+                        setIsDisplayedAddingMoney(true);
+                        setEnteredValue('');
+                        buyWarningMessage = {
+                           message: '',
+                           isValid: false
+                        };
+                     }} variant='body2' component="span" sx={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} > {(type === 'buy') && (buyWarningMessage.isValid) && 'Add Money'} </Typography> 
                   </Typography> 
                }
             </div>

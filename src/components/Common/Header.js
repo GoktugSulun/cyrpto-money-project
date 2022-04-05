@@ -57,7 +57,7 @@ const ResponsiveAppBar = () => {
             onClick={() => navigate('/home')}
             sx={{ mr: 2, display: { xs: 'none', color: '#fcd535',  md: 'flex' }, cursor:'pointer' }}
           >
-            LOGO
+            BINANCE
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -103,7 +103,7 @@ const ResponsiveAppBar = () => {
             sx={{ flexGrow: 1, cursor: 'pointer', display: { xs: 'flex', md: 'none' } }}
             onClick={() => navigate('/home')}
           >
-            LOGO
+            BINANCE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
