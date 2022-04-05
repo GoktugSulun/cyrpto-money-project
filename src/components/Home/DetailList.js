@@ -50,7 +50,7 @@ const NestedList = (props) => {
   const purchaseTime = `${hour}:${min}`;
 
   return (
-    <div style={{ display: 'flex', marginTop: 10 }}>
+    <div style={{ display: 'flex', marginTop: 30 }}>
        <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"

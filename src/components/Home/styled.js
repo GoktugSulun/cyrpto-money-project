@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Card, ImageListItem, Button, ListItemIcon } from '@mui/material';
 
 export const CardEl = styled(Card)`
-   width: 500px;
+   width: 600px;
    height: 500px;
    padding: 0 40px;
    overflow-y: auto;

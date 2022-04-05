@@ -16,6 +16,8 @@ import { useCallback } from 'react';
 import * as actionCreators from '../store/actions/actionCreators';
 import { getHomeApiRequest } from '../store/actions/thunkActions';
 
+import { MainEl } from '../assets/styled';
+
 // const userWalletInfo = {
 //   target: 'user',
 //   title: 'My Wallet',
@@ -88,10 +90,10 @@ const HomePage = () => {
   return (
     <>
       <Header />
-      <Main>
+      <MainEl>
         <Card targetCard='user'/>
         <Card targetCard='purchase-history'/>
-      </Main>
+      </MainEl>
     </>
   )
 }

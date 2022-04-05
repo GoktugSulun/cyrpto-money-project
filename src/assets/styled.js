@@ -54,3 +54,24 @@ export const SoldButton = styled(Button)`
          opacity: .7;
       }
 `;
+
+export const MainEl = styled.main`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100vw;
+   gap: 20px;
+   height: calc(100vh - 68px);
+
+   @media (max-width: 1050px) {
+      flex-direction: column;
+      width: auto;
+      padding: 20px 0;
+   }
+
+   @media (max-width: 600px) {
+      .iCqfhB {
+         width: 95%;
+      }
+   }
+`;

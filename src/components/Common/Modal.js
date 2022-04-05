@@ -40,7 +40,7 @@ export default function BasicModal(props) {
   const { balance } = wallet;
 
   const { type, clickInfo } = props;
-
+  
   return (
     <div>
       {
@@ -79,11 +79,14 @@ export default function BasicModal(props) {
             <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Current value: {clickInfo?.row?.col2 || ''} </Typography>
           </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            How much do you want to buy {clickInfo?.row?.col1 || ''} ?
+            { (type === 'buy') 
+                ? `How much do you want to buy ${clickInfo?.row?.col1 || ''} ?`
+                : `How much do you want to sell ${clickInfo?.row?.col1 || ''} ?`
+            }
           </Typography>
 
           <div style={{ marginTop: 15 }}>
-            <Input wallet={wallet} clickInfo={clickInfo || {}} />
+           <Input type={type} wallet={wallet} clickInfo={clickInfo || {}} /> 
           </div>
           
         </Box>

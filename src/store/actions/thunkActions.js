@@ -52,7 +52,6 @@ export const postWalletApiRequest = (crypto, cost) => async (dispatch, getState)
 export const postHistoryApiRequest = (crypto) => async (dispatch, getState) => {
 
    dispatch(actionCreators.addCryptoToHistory(crypto));
-   // dispatch(actionCreators.decreaseBalance(cost));
 
    const state = getState();
 
@@ -61,9 +60,30 @@ export const postHistoryApiRequest = (crypto) => async (dispatch, getState) => {
       body: JSON.stringify(state.historyReducer)
    });
    const data = await response.json();
-   console.log(data, ' post history api request data ????');
    dispatch(actionCreators.getHistoryApi(data));
    
+}
+
+export const sellCrypto = (crypto) => async (dispatch, getState) => {
+   
+   const cost = Math.round(crypto.amount * crypto.price);
+   const cryptoRemoved = {
+      ...crypto,
+      cost: cost
+   }
+   
+   dispatch(actionCreators.removeCryptoFromWallet(cryptoRemoved));
+   dispatch(actionCreators.increaseBalance(cost));
+
+   const state = getState();
+
+   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+      method: 'PUT',
+      body: JSON.stringify(state.walletReducer)
+   });
+   const data = await response.json();
+   dispatch(actionCreators.getHistoryApi(data));
+
 }
 
 // export const setBalance = (newWallet) => async (dispatch) => {

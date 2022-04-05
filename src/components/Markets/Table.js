@@ -8,7 +8,7 @@ import Modal from '../Common/Modal'
 import { useSelector } from 'react-redux';
 
 
-export default function ToolbarGrid() {
+const ToolbarGrid = () => {
   const marketDatas = useSelector(state => state.marketReducer);
 
   const [finalClickInfo, setFinalClickInfo] = React.useState(null)
@@ -109,6 +109,8 @@ const nameOfColumns = [
   '24h Volume',
   'Market Cap',
 ]
+
+export default ToolbarGrid;
 
 // const columns = [
 //   { field: 'col1', headerName: 'Name', width: 150 },

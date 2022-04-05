@@ -13,8 +13,8 @@ const style = {
    top: '50%',
    left: '50%',
    transform: 'translate(-50%, -50%)',
-   width: 600,
-   height: 400,
+   width: 650,
+   height: 450,
    bgcolor: 'background.paper',
    borderRadius: 5,
    boxShadow: 24,
@@ -22,7 +22,7 @@ const style = {
    py: 3
  };
 
- const center = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 15 };
+ const center = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 25 };
 
 const BasicModal = (props) => {
   const [open, setOpen] = React.useState(false);
