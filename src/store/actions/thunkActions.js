@@ -9,19 +9,15 @@ export const getHomeApiRequest = () => async (dispatch, getState) => {
    // const state = getState();
    // const userId = state.userReducer.userId;
 
-   await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`)
-    .then((response) => response.json())
-    .then((data) => {
-       console.log(data , ' wallet data');
-      dispatch(actionCreators.getWalletApi(data))
-    });
+   const responseWallet = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`)
+   const dataWallet = await responseWallet.json();
+  
+   dispatch(actionCreators.getWalletApi(dataWallet));
 
-   await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
-    .then((response) => response.json())
-    .then((data) => {
-       console.log(data, ' history data');
-      dispatch(actionCreators.getHistoryApi(data.cryptos))
-    });
+   const responseHistory = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
+   const dataHistory = await responseHistory.json();
+
+   dispatch(actionCreators.getHistoryApi(dataHistory.cryptos))
 
     
 
