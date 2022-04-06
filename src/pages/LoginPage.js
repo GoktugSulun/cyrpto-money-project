@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useState } from 'react';
 import { useNavigate, Link as RouterLink} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as thunkActions from '../store/actions/thunkActions'
 
 const API_KEY = `AIzaSyBdYwP4dtvj9dnrRfyMpAKu-eO1wjbMaZI`;
 
@@ -39,6 +41,7 @@ const SignInSide = () => {
    const [isRemember, setIsRemember] = useState(false);
 
    const navigate = useNavigate();
+   const dispatch = useDispatch();
 
    const rememberHandler = (e) => {
       setIsRemember(e.target.checked);
@@ -55,33 +58,28 @@ const SignInSide = () => {
          returnSecureToken: true
       }
 
-      const sendRequest = async () => {
-         const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
-            method: 'POST',
-            body: JSON.stringify(userData)
-         });
-         const data = await response.json();
-         console.log(data, ' SINGIN DATA');
+      dispatch(thunkActions.getUserInformation(userData, isRemember, navigate));
 
-         const idToken = data.idToken;
-         if(isRemember){
-            localStorage.setItem('token', idToken);
-         }
 
-         navigate('/home');
+      // const sendRequest = async () => {
+      //    const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
+      //       method: 'POST',
+      //       body: JSON.stringify(userData)
+      //    });
+      //    const data = await response.json();
+      //    console.log(data, ' SINGIN DATA');
 
-         // if(data.registered){
-         //    navigate('/');
-         // }
-      }
+      //    const idToken = data.idToken;
+      //    if(isRemember){
+      //       localStorage.setItem('token', idToken);
+      //    }
 
-      try {
-         await sendRequest();
+         
 
-        
-      }catch(error) {
-         console.log(error);
-      }
+      //    // if(data.registered){
+      //    //    navigate('/');
+      //    // }
+      // }
     
   };
 

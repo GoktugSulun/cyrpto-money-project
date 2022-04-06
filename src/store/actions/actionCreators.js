@@ -20,3 +20,6 @@ export const increaseBalance = (value) => ({ type: actionTypes.BALANCE_INCREASE,
 export const addCryptoToHistory = (crypto) => ({ type: actionTypes.CRYPTO_ADD_TO_HISTORY, payload: crypto });
 // export const clearCryptoHistory = () => ({ type: actionTypes.CLEAR_HISTORY });
 
+
+// unique user id and wallet
+export const getUserInformation = (userInfo) => ({ type: actionTypes.GET_USER_INFORMATION, payload: userInfo });

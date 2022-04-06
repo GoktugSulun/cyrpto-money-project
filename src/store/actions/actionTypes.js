@@ -15,5 +15,9 @@ export const WALLET_SET = "WALLET_SET";
 
 export const CRYPTO_ADD_TO_HISTORY = "CRYPTO_ADD_TO_HISTORY";
 
+// Unique user id and wallet
+export const GET_USER_INFORMATION = "GET_USER_INFORMATION";
+
+
 
 

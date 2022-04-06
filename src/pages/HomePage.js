@@ -84,6 +84,7 @@ const HomePage = () => {
   useEffect(() => {
 
     dispatch(getHomeApiRequest());
+    // dispatch(getUserInformation());
 
   }, [dispatch]);
 

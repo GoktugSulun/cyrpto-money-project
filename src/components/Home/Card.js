@@ -43,12 +43,13 @@ export default function ActionAreaCard(props) {
 
 const userCard = (userWallet, navigate) => {
   const { title, balance, cryptos } = userWallet;
+  console.log(cryptos,  ' ussserrwALLTL');
 
   return (
     <CardEl>
       <CardContent>
         <Typography gutterBottom variant="h3" component="div" align='center'>
-          { title }
+          YOUR WALLET
         </Typography>
         <Divider />
         <Typography sx={{ mt: 4}} variant="h5" color="text.secondary" >
@@ -56,8 +57,8 @@ const userCard = (userWallet, navigate) => {
         </Typography>
         
         {
-          cryptos &&
-          cryptos?.map((crypto, index) => {
+          cryptos.length > 0 &&
+          cryptos.map((crypto, index) => {
             return (<CardContainer key={`crypto-wallet-${index}`}>
               <div style={{display: 'flex'}}>
                 <Icon icon={`cryptocurrency:${crypto?.type?.toLowerCase()}`} width="48" height="48" />
@@ -114,12 +115,12 @@ const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
         <abbr title='Clear History'><DeleteIcon fontSize='medium' /></abbr>
        </ClearHistoryEl> */}
         <Typography gutterBottom variant="h3" component="div" align='center'>
-          { purchaseHistory?.title }
+          PURCHASE HISTORY
         </Typography>
         <Divider style={{ marginBottom: 40 }} />
 
         {
-          cryptos && 
+          cryptos.length > 0 && 
           cryptos.map((crypto, index) => {
             return (
               <CardContainer key={`crypto-history-${index}`}>

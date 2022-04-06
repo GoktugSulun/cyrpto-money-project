@@ -4,8 +4,7 @@ import produce, {current} from 'immer';
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-   title: '',
-   target: '',
+   userId: '',
    balance: 0,
    cryptos: [],
 }

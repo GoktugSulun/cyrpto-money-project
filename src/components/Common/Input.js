@@ -49,6 +49,7 @@ let buyWarningMessage = {};
 
 const CustomizedInputs = (props) => { 
    const dispatch = useDispatch();
+   const { userId } = useSelector(state => state.userReducer);
 
    const [enteredValue, setEnteredValue] = React.useState('');
    const [calculatedValue, setCalculatedValue] = React.useState(0);
@@ -118,7 +119,8 @@ const CustomizedInputs = (props) => {
          amount: Number(calculatedValue),
          price: Number(priceValue),
          type: clickInfo.row.col0,
-         cost: Number(enteredValue)
+         cost: Number(enteredValue),
+         userId: userId
       };
 
       let newCryptoForHistory = {
@@ -127,6 +129,7 @@ const CustomizedInputs = (props) => {
          cost: enteredValue, // how much money did I pay or get ?
          amount: calculatedValue, // how much cyrpto-money did I buy or sell ?
          date: new Date(), // when did I
+         userId: userId
       }
 
       if(isTypeBuy){
