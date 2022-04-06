@@ -53,6 +53,12 @@ export const SellButton = styled(Button)`
          background: red;
          opacity: .7;
       }
+
+      :disabled {
+         background: rgba(239, 239, 239, 0.3);
+         color: rgba(16, 16, 16, 0.3);
+         border: 1px solid rgba(118, 118, 118, 0.3) !important;
+      }
 `;
 
 export const MainEl = styled.main`

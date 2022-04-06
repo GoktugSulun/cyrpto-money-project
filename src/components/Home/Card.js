@@ -57,7 +57,7 @@ const userCard = (userWallet, navigate) => {
         </Typography>
         
         {
-          cryptos.length > 0 &&
+          cryptos?.length > 0 &&
           cryptos.map((crypto, index) => {
             return (<CardContainer key={`crypto-wallet-${index}`}>
               <div style={{display: 'flex'}}>
@@ -120,7 +120,7 @@ const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
         <Divider style={{ marginBottom: 40 }} />
 
         {
-          cryptos.length > 0 && 
+          cryptos?.length > 0 && 
           cryptos.map((crypto, index) => {
             return (
               <CardContainer key={`crypto-history-${index}`}>

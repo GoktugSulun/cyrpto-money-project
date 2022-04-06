@@ -49,7 +49,7 @@ let buyWarningMessage = {};
 
 const CustomizedInputs = (props) => { 
    const dispatch = useDispatch();
-   const { userId } = useSelector(state => state.userReducer);
+   // const { userId } = useSelector(state => state.userReducer);
 
    const [enteredValue, setEnteredValue] = React.useState('');
    const [calculatedValue, setCalculatedValue] = React.useState(0);
@@ -120,7 +120,7 @@ const CustomizedInputs = (props) => {
          price: Number(priceValue),
          type: clickInfo.row.col0,
          cost: Number(enteredValue),
-         userId: userId
+         // userId: userId
       };
 
       let newCryptoForHistory = {
@@ -129,13 +129,14 @@ const CustomizedInputs = (props) => {
          cost: enteredValue, // how much money did I pay or get ?
          amount: calculatedValue, // how much cyrpto-money did I buy or sell ?
          date: new Date(), // when did I
-         userId: userId
+         // userId: userId
       }
 
       if(isTypeBuy){
          dispatch(thunkActions.postWalletApiRequest(newCryptoForWallet, enteredValue));
       }else {
          dispatch(thunkActions.sellCrypto(newCryptoForWallet, enteredValue));
+         // dispatch(thunkActions.setBalance(enteredValue));
       }
       
       dispatch(thunkActions.postHistoryApiRequest(newCryptoForHistory));

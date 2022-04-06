@@ -12,7 +12,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['userReducer'],
+  // whiteList: ['userReducer'],
   // blackList: ['walletReducer', 'marketReducer', 'historyReducer'],
 }
 
@@ -22,6 +22,7 @@ const configureStore = () => {
   let store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
   let persistor = persistStore(store);
   return { store, persistor }
+  // return createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
 }
 
 export default configureStore;

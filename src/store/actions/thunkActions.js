@@ -6,26 +6,46 @@ const API_KEY = `AIzaSyBdYwP4dtvj9dnrRfyMpAKu-eO1wjbMaZI`;
 
 export const getHomeApiRequest = () => async (dispatch, getState) => {
    
-   const state = getState();
-   const userId = state.userReducer.userId;
+   // const state = getState();
+   // const userId = state.userReducer.userId;
 
-   await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallets.json`)
+   await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`)
     .then((response) => response.json())
     .then((data) => {
-       console.log(data , ' dataAAAA');
-      const filteredData = data.filter(dataEl => dataEl.userId === userId);
-      console.log(filteredData , ' filteredData');
-      dispatch(actionCreators.getWalletApi(filteredData[0]))
+       console.log(data , ' wallet data');
+      dispatch(actionCreators.getWalletApi(data))
     });
 
    await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data,  ' ??');
-      const filteredCryptos = data.cryptos.filter(crypto => crypto.userId === userId);
-      console.log(filteredCryptos[0], ' filteredCryptos');
-      dispatch(actionCreators.getHistoryApi(filteredCryptos))
+       console.log(data, ' history data');
+      dispatch(actionCreators.getHistoryApi(data.cryptos))
     });
+
+    
+
+  
+    // fetch using userId 
+   //  await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallets.json`)
+   //  .then((response) => response.json())
+   //  .then((data) => {
+   //     console.log(data , ' dataAAAA');
+   //    const filteredData = data.filter(dataEl => dataEl.userId === userId);
+   //    console.log(filteredData , ' filteredData');
+   //    dispatch(actionCreators.getWalletApi(filteredData[0]))
+   //  });
+
+    // fetch using userId 
+
+   //  await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
+   //  .then((response) => response.json())
+   //  .then((data) => {
+   //    console.log(data,  ' ??');
+   //    const filteredCryptos = data.cryptos.filter(crypto => crypto.userId === userId);
+   //    console.log(filteredCryptos[0], ' filteredCryptos');
+   //    dispatch(actionCreators.getHistoryApi(filteredCryptos))
+   //  });
 
 }
 
@@ -81,13 +101,15 @@ export const postHistoryApiRequest = (crypto) => async (dispatch, getState) => {
    
 }
 
-export const sellCrypto = (crypto) => async (dispatch, getState) => {
+export const sellCrypto = (crypto, enteredValue) => async (dispatch, getState) => {
    
-   const cost = Math.round(crypto.amount * crypto.price);
+   const cost = Number(enteredValue);
    const cryptoRemoved = {
       ...crypto,
       cost: cost
    }
+
+   console.log(cost, ' => before dispatch');
    
    dispatch(actionCreators.removeCryptoFromWallet(cryptoRemoved));
    dispatch(actionCreators.increaseBalance(cost));

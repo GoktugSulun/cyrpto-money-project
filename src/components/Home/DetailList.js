@@ -106,7 +106,7 @@ const NestedList = (props) => {
       </ListItemButton>
       <ListItemButton>
          <ListItemIcon>
-            <DraftsIcon />
+          <AttachMoneyIcon />
          </ListItemIcon>
          <ListItemText primary={`Amount: ${crypto.amount}`} />
       </ListItemButton>

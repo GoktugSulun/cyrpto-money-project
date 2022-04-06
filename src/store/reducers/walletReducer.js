@@ -43,6 +43,7 @@ const walletReducer = produce((draft, action) => {
                   draft.cryptos.splice(index, 1);
                }else {
                   draft.cryptos[index].amount -= action.payload.amount;
+                  draft.cryptos[index].cost -= action.payload.cost;
                }
             }
             
