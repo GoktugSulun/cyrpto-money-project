@@ -23,8 +23,7 @@ const ToolbarGrid = () => {
 
   return (
     <ContainerEl maxWidth='lg'>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
+      <DataGrid
           rows={rows}
           columns={columns}
           autoHeight={true}
@@ -33,7 +32,6 @@ const ToolbarGrid = () => {
             Toolbar: GridToolbar,
           }}
         />
-      </div>
     </ContainerEl>
   );
 }

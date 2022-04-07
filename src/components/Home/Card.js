@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Icon } from '@iconify/react';
 
 import { DivWallet, CardContainer, CardEl } from './styled';
-import { BuyButton, SoldButton } from '../../assets/styled';
+import { BuyButton, FlexEl, SoldButton } from '../../assets/styled';
 import HistoryDetail from './HistoryDetail'
 
 import { useEffect } from 'react';
@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import * as thunkActions from '../../store/actions/thunkActions'
 
 
-export default function ActionAreaCard(props) {
+const ActionAreaCard = (props) => {
   const walletReducer = useSelector(state => state.walletReducer);
   const historyReducer = useSelector(state => state.historyReducer);
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ export default function ActionAreaCard(props) {
 }
 
 const userCard = (userWallet, navigate) => {
-  const { title, balance, cryptos } = userWallet;
+  const { balance, cryptos } = userWallet;
 
   return (
     <CardEl>
@@ -59,7 +59,7 @@ const userCard = (userWallet, navigate) => {
           cryptos?.length > 0 &&
           cryptos.map((crypto, index) => {
             return (<CardContainer key={`crypto-wallet-${index}`}>
-              <div style={{display: 'flex'}}>
+              <FlexEl alignItems="center">
                 <Icon icon={`cryptocurrency:${crypto?.type?.toLowerCase()}`} width="48" height="48" />
                 <div>
                   <DivWallet>
@@ -79,18 +79,13 @@ const userCard = (userWallet, navigate) => {
                     </Typography>
                   </DivWallet>
                 </div>       
-              </div>
-              
-              {/* <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                <BuyButton onClick={cryptoBuyHandler} size='small'> Buy </BuyButton>
-                <SoldButton onClick={cryptoSoldHandler} size='small'> Sell </SoldButton>
-              </ButtonGroup> */}
+              </FlexEl>
             </CardContainer>)
           })
         }
 
         {
-          !cryptos && <Typography sx={{ color: 'red', marginTop: 10, fontStyle: 'italic' }} >Your wallet is empty! <br /> <Typography onClick={() => navigate('/markets')} component='span' sx={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}>Go to markets</Typography> and buy some crypto :)</Typography>
+          !cryptos && <Typography className='error-message'>Your wallet is empty! <br /> <Typography onClick={() => navigate('/markets')} component='span' className='go-to-market'>Go to markets</Typography> and buy some crypto :)</Typography>
         }
 
       </CardContent>
@@ -99,30 +94,23 @@ const userCard = (userWallet, navigate) => {
 }
 
 const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
-  const { title, cryptos } = purchaseHistory;
-
-  // const clearHistoryHandler = () => {
-  //   dispatch(thunkActions.clearCryptoHistory());
-  // }
+  const { cryptos } = purchaseHistory;
 
   return (
     <CardEl>
       <CardContent>
-        
-       {/* <ClearHistoryEl onClick={clearHistoryHandler} >
-        <abbr title='Clear History'><DeleteIcon fontSize='medium' /></abbr>
-       </ClearHistoryEl> */}
+      
         <Typography gutterBottom variant="h3" component="div" align='center'>
           PURCHASE HISTORY
         </Typography>
-        <Divider style={{ marginBottom: 40 }} />
+        <Divider className='second-divider' />
 
         {
           cryptos?.length > 0 && 
           cryptos.map((crypto, index) => {
             return (
               <CardContainer key={`crypto-history-${index}`}>
-                <div style={{display: 'flex'}}>
+                <FlexEl>
                   <Icon icon={`cryptocurrency:${crypto?.type?.toLowerCase()}`} width="48" height="48" />
                   <div>
                     <DivWallet>
@@ -143,10 +131,10 @@ const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
                     </DivWallet>
                     <HistoryDetail crypto={crypto} />
                   </div>                
-                </div>
+                </FlexEl>
 
                 <DivWallet>
-                  <Typography sx={{ fontStyle: 'italic' }} variant="body2" color="text.secondary">
+                  <Typography className='italic' variant="body2" color="text.secondary">
                     { 
                     // 1 hour = 3600000 ms
                     ((new Date().getTime() - new Date(crypto?.date).getTime()) / 3600000) < 1 
@@ -162,7 +150,7 @@ const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
         }
 
         {
-          cryptos?.length === 0 && <div style={{ fontStyle:'italic', color: 'red' }}> There is no history! </div>
+          cryptos?.length === 0 && <div className='no-history'> There is no history! </div>
         }
 
         
@@ -170,3 +158,5 @@ const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
     </CardEl>
   );
 }
+
+export default ActionAreaCard;

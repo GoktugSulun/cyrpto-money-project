@@ -8,21 +8,8 @@ import Divider from '@mui/material/Divider';
 import { Icon } from '@iconify/react';
 import DetailList from './DetailList'
 
-const style = {
-   position: 'absolute',
-   top: '50%',
-   left: '50%',
-   transform: 'translate(-50%, -50%)',
-   width: 650,
-   height: 450,
-   bgcolor: 'background.paper',
-   borderRadius: 5,
-   boxShadow: 24,
-   px: 4,
-   py: 3
- };
-
- const center = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 25 };
+import { BoxEl } from './styled';
+import { FlexEl } from '../../assets/styled';
 
 const BasicModal = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -40,20 +27,20 @@ const BasicModal = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography sx={{ marginBottom: 3 }} id="modal-modal-title" variant="h3" component="h1">
+        <BoxEl>
+          <Typography id="modal-modal-title" variant="h3" component="h1">
             History Detail
           </Typography>
           <Divider />
-          <div style={center}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 15,  }} >
+          <FlexEl justifyContent='space-between' alignItems="center" marginTop='25'>
+            <FlexEl alignItems='center' gap="15" >
               <Icon icon="cryptocurrency:yfi" width="48" height="48" />
               <Typography variant="h4"> {crypto.type} </Typography>
-            </div>
-            <Typography variant="body1" style={{ fontStyle: 'italic', opacity: 0.7, fontWeight: 'bold' }} > Current value: ${crypto.price} </Typography>
-          </div>
+            </FlexEl>
+            <Typography variant="body1" className='current-value'> Current value: ${crypto.price} </Typography>
+          </FlexEl>
           <DetailList crypto={crypto} />
-        </Box>
+        </BoxEl>
       </Modal>
     </div>
   );

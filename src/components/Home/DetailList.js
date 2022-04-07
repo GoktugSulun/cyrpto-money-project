@@ -14,6 +14,9 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { Typography } from '@mui/material';
 
+import { FlexEl } from '../../assets/styled';
+import { ListEl } from './styled';
+
 
 const NestedList = (props) => {
   const [open, setOpen] = React.useState(true);
@@ -50,68 +53,68 @@ const NestedList = (props) => {
   const purchaseTime = `${hour}:${min}`;
 
   return (
-    <div style={{ display: 'flex', marginTop: 30 }}>
-       <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      subheader={
-        <ListSubheader component="div" id="nested-list-subheader">
-          Details
-        </ListSubheader>
-      }
-    >
-      <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Name: ${crypto.type}`} />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Date: ${purchaseDate}`} />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <AttachMoneyIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Cost: $${crypto.cost}`} />
-      </ListItemButton>
-    </List>
-
-   <List
-   sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-   component="nav"
-   aria-labelledby="nested-list-subheader"
-   >
-      <ListItemButton style={{ opacity: 0, visibility: 'hidden' }}>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary='' />
-      </ListItemButton>
-      <ListItemButton>
-         <ListItemIcon>
+    <FlexEl marginTop={30} >
+       <ListEl className='detail-list' bgcolor='background.paper'
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Details
+            </ListSubheader>
+            }
+      >
+        <ListItemButton>
+          <ListItemIcon>
             <SendIcon />
-         </ListItemIcon>
-         <ListItemText primary={`Trade Type: ${crypto.tradeType.toUpperCase()}`} />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Time: ${purchaseTime}`} />
-      </ListItemButton>
-      <ListItemButton>
-         <ListItemIcon>
-          <AttachMoneyIcon />
-         </ListItemIcon>
-         <ListItemText primary={`Amount: ${crypto.amount}`} />
-      </ListItemButton>
-   </List>
-    </div>
+          </ListItemIcon>
+          <ListItemText primary={`Name: ${crypto.type}`} />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary={`Date: ${purchaseDate}`} />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <AttachMoneyIcon />
+          </ListItemIcon>
+          <ListItemText primary={`Cost: $${crypto.cost}`} />
+        </ListItemButton>
+      </ListEl>
+
+      <ListEl 
+        className='detail-list'
+        bgcolor='background.paper'
+        component="nav"
+        aria-labelledby="nested-list-subheader"
+      >
+        <ListItemButton className='hide'>
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary='' />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+              <SendIcon />
+          </ListItemIcon>
+          <ListItemText primary={`Trade Type: ${crypto.tradeType.toUpperCase()}`} />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary={`Time: ${purchaseTime}`} />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <AttachMoneyIcon />
+          </ListItemIcon>
+          <ListItemText primary={`Amount: ${crypto.amount}`} />
+        </ListItemButton>
+      </ListEl>
+    </FlexEl>
     
   );
 }

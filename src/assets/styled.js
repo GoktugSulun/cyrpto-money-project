@@ -81,3 +81,11 @@ export const MainEl = styled.main`
       }
    }
 `;
+
+export const FlexEl = styled.div`
+   display: flex;
+   justify-content: ${props => props?.justifyContent || 'flex-start'};
+   align-items: ${props => props?.alignItems || 'flex-start'};
+   margin-top: ${props => props?.marginTop + 'px' || 0};
+   gap: ${props => props?.gap + 'px' || 0}
+`;
