@@ -43,7 +43,6 @@ export default function ActionAreaCard(props) {
 
 const userCard = (userWallet, navigate) => {
   const { title, balance, cryptos } = userWallet;
-  console.log(cryptos,  ' ussserrwALLTL');
 
   return (
     <CardEl>
@@ -101,7 +100,6 @@ const userCard = (userWallet, navigate) => {
 
 const purchaseHistoryCard = (purchaseHistory, navigate, dispatch) => {
   const { title, cryptos } = purchaseHistory;
-  console.log(cryptos, ' cryptos');
 
   // const clearHistoryHandler = () => {
   //   dispatch(thunkActions.clearCryptoHistory());

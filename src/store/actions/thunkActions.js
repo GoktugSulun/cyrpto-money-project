@@ -1,67 +1,43 @@
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import * as actionCreators from "./actionCreators";
+import useFetch from "../../hooks/useFetch";
 
 const API_KEY = `AIzaSyBdYwP4dtvj9dnrRfyMpAKu-eO1wjbMaZI`;
 
 export const getHomeApiRequest = () => async (dispatch, getState) => {
-   
-   // const state = getState();
-   // const userId = state.userReducer.userId;
 
-   const responseWallet = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`)
-   const dataWallet = await responseWallet.json();
-  
-   dispatch(actionCreators.getWalletApi(dataWallet));
+   // fetch data for walletReducer
+   const responseWallet =  await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`);
+   console.log(responseWallet, ' dataWallet');
 
-   const responseHistory = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
-   const dataHistory = await responseHistory.json();
+   dispatch(actionCreators.getWalletApi(responseWallet));
 
-   dispatch(actionCreators.getHistoryApi(dataHistory.cryptos))
+   // fetch data for historyReducer
+   const responseHistory =  await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`);
 
-    
-
-  
-    // fetch using userId 
-   //  await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallets.json`)
-   //  .then((response) => response.json())
-   //  .then((data) => {
-   //     console.log(data , ' dataAAAA');
-   //    const filteredData = data.filter(dataEl => dataEl.userId === userId);
-   //    console.log(filteredData , ' filteredData');
-   //    dispatch(actionCreators.getWalletApi(filteredData[0]))
-   //  });
-
-    // fetch using userId 
-
-   //  await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`)
-   //  .then((response) => response.json())
-   //  .then((data) => {
-   //    console.log(data,  ' ??');
-   //    const filteredCryptos = data.cryptos.filter(crypto => crypto.userId === userId);
-   //    console.log(filteredCryptos[0], ' filteredCryptos');
-   //    dispatch(actionCreators.getHistoryApi(filteredCryptos))
-   //  });
+   dispatch(actionCreators.getHistoryApi(responseHistory.cryptos));
 
 }
 
 export const getMarketApiRequest = () => async (dispatch) => {
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/market.json`);
-   const data = await response.json();
+   const responseMarket = await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/market.json`);
   
-   dispatch(actionCreators.getMarketApi(data));
+   dispatch(actionCreators.getMarketApi(responseMarket));
    
 }
 
 export const setBalance = (newWallet) => async (dispatch) => {
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+   const params = {
       method: 'PUT',
       body: JSON.stringify(newWallet)
-   });
-   const data = await response.json();
-   dispatch(actionCreators.getWalletApi(data));
+   }
+
+   const responseBalance = useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, params);
+
+   dispatch(actionCreators.getWalletApi(responseBalance));
 }
 
 export const postWalletApiRequest = (crypto, cost) => async (dispatch, getState) => {
@@ -71,29 +47,31 @@ export const postWalletApiRequest = (crypto, cost) => async (dispatch, getState)
 
    const state = getState();
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+   const params = {
       method: 'PUT',
-      // body: JSON.stringify(state.walletReducer)
       body: JSON.stringify(state.walletReducer)
-   });
-   const data = await response.json();
-   dispatch(actionCreators.getWalletApi(data));
+   }
+
+   const responseWallet = await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, params);
+
+   dispatch(actionCreators.getWalletApi(responseWallet));
    
 }
 
 export const postHistoryApiRequest = (crypto) => async (dispatch, getState) => {
-   console.log('POST HİSTIRYORI AASPİ RQUEST ' , crypto);
 
    dispatch(actionCreators.addCryptoToHistory(crypto));
 
    const state = getState();
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`, {
+   const params = {
       method: 'PUT',
       body: JSON.stringify(state.historyReducer)
-   });
-   const data = await response.json();
-   dispatch(actionCreators.getHistoryApi(data.cryptos));
+   }
+
+   const responseHistory = await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/history.json`, params);
+
+   dispatch(actionCreators.getHistoryApi(responseHistory.cryptos));
    
 }
 
@@ -104,20 +82,20 @@ export const sellCrypto = (crypto, enteredValue) => async (dispatch, getState) =
       ...crypto,
       cost: cost
    }
-
-   console.log(cost, ' => before dispatch');
    
    dispatch(actionCreators.removeCryptoFromWallet(cryptoRemoved));
    dispatch(actionCreators.increaseBalance(cost));
 
    const state = getState();
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+   const params = {
       method: 'PUT',
       body: JSON.stringify(state.walletReducer)
-   });
-   const data = await response.json();
-   dispatch(actionCreators.getHistoryApi(data));
+   }
+
+   const responseSell = await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, params);
+
+   dispatch(actionCreators.getHistoryApi(responseSell));
 
 }
 
@@ -126,50 +104,53 @@ export const addMoneyToWallet = (value) => async (dispatch, getState) => {
 
    const state = getState();
 
-   const response = await fetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, {
+   const params = {
       method: 'PUT',
       body: JSON.stringify(state.walletReducer)
-   });
-   const data = await response.json();
-   dispatch(actionCreators.getWalletApi(data));
+   }
+
+   const responseMoney = await useFetch(`https://authorization-bece2-default-rtdb.firebaseio.com/wallet.json`, params);
+
+   dispatch(actionCreators.getWalletApi(responseMoney));
 
 }
 
-export const getUserInformation = (userData, isRemember, navigate) => async (dispatch, getState) => {
 
-      const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
-         method: 'POST',
-         body: JSON.stringify(userData)
-      });
-      const data = await response.json();
-      console.log(data, ' SINGIN DATA');
 
-      const idToken = data.idToken;
-      const userInfo = {
-         userId: data.localId,
-         email: data.email,
-      };
 
-      if(isRemember){
-         localStorage.setItem('token', idToken);
-      }
- 
-      dispatch(actionCreators.getUserInformation(userInfo));
 
-      
-      navigate('/home');
+
+
+
+
+
+
+
+
+export const getUserInformation = (userData, isRemember, navigate) => async (dispatch, getState) => { 
+
+   const params = {
+      method: 'POST',
+      body: JSON.stringify(userData)
+   }
+
+   const responseUserInfo = await useFetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, params);
+
+   const idToken = responseUserInfo.idToken;
+   const userInfo = {
+      userId: responseUserInfo.localId,
+      email: responseUserInfo.email,
+   };
+
+   if(isRemember){
+      localStorage.setItem('token', idToken);
+   }
+
+   dispatch(actionCreators.getUserInformation(userInfo));
+
+   
+   navigate('/home');
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 // export const clearCryptoHistory = () => async (dispatch, getState) => {

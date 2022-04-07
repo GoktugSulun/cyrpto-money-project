@@ -17,10 +17,7 @@ const PrivateRoute = (props) => {
       default:
          break;
    }
-   
-   
-
- 
+    
 }
 
 export default PrivateRoute;
